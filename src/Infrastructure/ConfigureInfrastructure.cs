@@ -1,14 +1,13 @@
-﻿
-using Application.Common.Interfaces;
-using Infrastructure.DailyRequest;
-using Infrastructure.gGRPC_Clients.Mongo;
-using Infrastructure.gRPC_Clients.Sybase;
+﻿using Application.Interfaz;
 using Infrastructure.Services;
 using Infrastructure.MemoryCache;
-using Infrastructure.Common.Interfaces;
+using Infrastructure.DailyRequest;
 using Infrastructure.ExternalAPIs;
 using Infrastructure.SessionControl;
-using Application.Interfaz;
+using Application.Common.Interfaces;
+using Infrastructure.Common.Interfaces;
+using Infrastructure.gGRPC_Clients.Mongo;
+using Infrastructure.gRPC_Clients.Sybase;
 
 namespace Microsoft.Extensions.DependencyInjection;
 public static class ConfigureInfrastructure

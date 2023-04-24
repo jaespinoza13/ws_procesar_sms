@@ -1,5 +1,5 @@
-﻿using Application.Common.ISO20022.Models;
-using Domain.Entities;
+﻿using Domain.Entities;
+using Application.Common.ISO20022.Models;
 
 namespace Application.SmsSocio.ValidarPalabraClave
 {

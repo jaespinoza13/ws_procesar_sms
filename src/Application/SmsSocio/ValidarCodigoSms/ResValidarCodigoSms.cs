@@ -2,7 +2,7 @@
 
 namespace Application.SmsSocio.ValidarCodigoSms
 {
-    public class ResValidarCodigoSms : ResComun
+    public class ResValidarCodigoSms
     {
         public int validez { get; set; }
     }

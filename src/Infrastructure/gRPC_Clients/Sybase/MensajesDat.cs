@@ -1,12 +1,13 @@
-﻿using Application.Common.Interfaces;
-using Microsoft.Extensions.Options;
-using Application.Common.Models;
+﻿using System.Reflection;
 using Application.Interfaz;
-using static AccesoDatosGrpcAse.Neg.DAL;
 using AccesoDatosGrpcAse.Neg;
+using Application.Common.Models;
+using Microsoft.Extensions.Options;
+using Application.Common.Interfaces;
 using Infrastructure.Common.Funciones;
-using System.Reflection;
 using Application.SmsSocio.ValidarSms;
+using static AccesoDatosGrpcAse.Neg.DAL;
+using Application.SmsSocio.ProcesarTransf;
 
 namespace Infrastructure.gRPC_Clients.Sybase
 {
@@ -99,7 +100,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
             return respuesta;
         }
 
-        public async Task<RespuestaTransaccion> ProcesarTransferencia(string str_telefono, string str_fecha_recepcion, int int_sms_id)
+        public async Task<RespuestaTransaccion> ProcesarTransferencia(ReqProcesarTransf req_procesar_transf)
         {
             RespuestaTransaccion respuesta = new();
 
@@ -107,9 +108,9 @@ namespace Infrastructure.gRPC_Clients.Sybase
             {
                 DatosSolicitud ds = new();
 
-                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_num_telefono", TipoDato = TipoDato.VarChar, ObjValue = str_telefono } );
-                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_fecha_transaccion", TipoDato = TipoDato.VarChar, ObjValue = str_fecha_recepcion } );
-                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_sms_id", TipoDato = TipoDato.Integer, ObjValue = int_sms_id.ToString() } );
+                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_num_telefono", TipoDato = TipoDato.VarChar, ObjValue = req_procesar_transf.str_num_telefono } );
+                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_fecha_transaccion", TipoDato = TipoDato.VarChar, ObjValue = req_procesar_transf.str_fecha_transaccion } );
+                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_sms_id", TipoDato = TipoDato.Integer, ObjValue = req_procesar_transf.int_sms_id.ToString() } );
 
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@str_error", TipoDato = TipoDato.VarChar } );
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@int_error_cod", TipoDato = TipoDato.Integer } );

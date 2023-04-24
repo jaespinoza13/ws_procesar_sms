@@ -1,6 +1,6 @@
-﻿using Application.Common.ISO20022.Models;
+﻿using MediatR;
 using Application.Common.Models;
-using MediatR;
+using Application.Common.ISO20022.Models;
 
 namespace Application.DatosSms.ProcesarSms
 {

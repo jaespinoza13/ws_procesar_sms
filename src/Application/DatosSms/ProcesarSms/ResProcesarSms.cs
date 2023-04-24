@@ -1,15 +1,10 @@
-﻿using Application.Common.ISO20022.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.DatosSms.ProcesarSms
+﻿namespace Application.DatosSms.ProcesarSms
 {
     public class ResProcesarSms
     {
-        public string codigo { get; set; }
-        public string mensaje { get; set; }
+        public DateTime dt_fecha_operacion { get; set; } = DateTime.Now;
+        public string str_id_transaccion { get; set; } = String.Empty;
+        public string codigo { get; set; } = String.Empty;
+        public string mensaje { get; set; } = String.Empty;
     }
 }
