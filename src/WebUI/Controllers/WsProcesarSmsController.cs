@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 
 //USE CASE
 using Application.DatosSms.ProcesarSms;
+using Application.DatosSms.ObtenerSms;
 
 namespace WebUI.Controllers
 {
@@ -24,9 +25,17 @@ namespace WebUI.Controllers
         // POST: api/servicio_procesar_sms/OBTENER_SMS
         [HttpPost( "OBTENER_SMS" )]
         [Produces( "application/json" )]
+        public async Task<ResObtenerSms> ObtenerSms(ReqObtenerSms reqObtenerSms)
+        {
+                    return await Mediator.Send( reqObtenerSms );
+        }
+
+        // POST: api/servicio_procesar_sms/PROCESAR_SMS
+        [HttpPost( "PROCESAR_SMS" )]
+        [Produces( "application/json" )]
         public async Task<ResProcesarSms> ProcesarSms(ReqProcesarSms reqProcesarSms)
         {
-           return await Mediator.Send( reqProcesarSms );
+            return await Mediator.Send( reqProcesarSms );
         }
     }
 }

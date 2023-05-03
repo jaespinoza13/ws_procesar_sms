@@ -26,6 +26,33 @@ namespace Infrastructure.gRPC_Clients.Sybase
             _settings = settings.CurrentValue;
         }
 
+        public async Task<RespuestaTransaccion> GetSmsPorProcesar()
+        {
+            RespuestaTransaccion respuesta = new RespuestaTransaccion();
+
+            try
+            {
+                DatosSolicitud ds = new();
+
+                ds.NombreSP = "get_sms_por_procesar";
+                ds.NombreBD = _settings.DB_meg_servicios;
+
+                var resultado = _objClienteDal.ExecuteDataSet( ds );
+                var lst_valores = new List<ParametroSalidaValores>();
+
+                foreach (var item in resultado.ListaPSalidaValores) lst_valores.Add( item );
+                respuesta.codigo = "0".ToString().Trim().PadLeft( 3, '0' );
+                respuesta.cuerpo = Funciones.ObtenerDatos( resultado );
+            }
+            catch (Exception ex)
+            {
+                respuesta.codigo = "003";
+                respuesta.diccionario.Add( "str_error", ex.ToString() );
+                await _logsService.SaveExcepcionDataBaseSybase( respuesta, MethodBase.GetCurrentMethod()!.Name, ex, _str_clase );
+            }
+            return respuesta;
+        }
+
         public async Task<RespuestaTransaccion> ValidarCodigoSms(int int_codigo_sms)
         {
             RespuestaTransaccion respuesta = new RespuestaTransaccion();
@@ -63,16 +90,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
             {
                 DatosSolicitud ds = new();
 
-                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_codigo_sms", TipoDato = TipoDato.Integer, ObjValue = reqValidarSms.int_codigo.ToString() } );
-                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_codigo_raiz", TipoDato = TipoDato.VarChar, ObjValue = reqValidarSms.str_codigo_raiz } );
-                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_texto_sms", TipoDato = TipoDato.VarChar, ObjValue = reqValidarSms.str_texto_sms } );
-                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_telefono", TipoDato = TipoDato.VarChar, ObjValue =  reqValidarSms.str_telefono} );
-                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_fecha_recepcion", TipoDato = TipoDato.VarChar, ObjValue =  reqValidarSms.str_fecha_recepcion} );
-                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_observacion", TipoDato = TipoDato.VarChar, ObjValue = reqValidarSms.str_observacion} );
-                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_operadora", TipoDato = TipoDato.VarChar, ObjValue =  reqValidarSms.str_operadora} );
-                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_short_code", TipoDato = TipoDato.VarChar, ObjValue =  reqValidarSms.str_short_code} );
-                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_emisor", TipoDato = TipoDato.VarChar, ObjValue = reqValidarSms.str_emisor } );
-                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_estado_sms_proveedor", TipoDato = TipoDato.VarChar, ObjValue = reqValidarSms.str_estado_sms_proveedor} );
+                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_sms_id", TipoDato = TipoDato.Integer, ObjValue = reqValidarSms.int_sms_id.ToString() } );
 
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@str_error", TipoDato = TipoDato.VarChar } );
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@int_error_cod", TipoDato = TipoDato.Integer } );
@@ -187,6 +205,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
                 ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_estado_sms_proveedor", TipoDato = TipoDato.VarChar, ObjValue = sms.obj_mensaje.str_estado } );
                 ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_estado_proceso_sms", TipoDato = TipoDato.VarChar, ObjValue = str_sms_estado } );
 
+                ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@int_duplicado", TipoDato = TipoDato.Integer } );
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@int_sms_id", TipoDato = TipoDato.Integer } );
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@int_error_cod", TipoDato = TipoDato.Integer } );
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@str_error", TipoDato = TipoDato.VarChar } );
@@ -198,6 +217,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
                 var lst_valores = new List<ParametroSalidaValores>();
 
                 foreach (var item in resultado.ListaPSalidaValores) lst_valores.Add( item );
+                var int_duplicado = lst_valores.Find( x => x.StrNameParameter == "@int_duplicado" )!.ObjValue;
                 var int_sms_id = lst_valores.Find( x => x.StrNameParameter == "@int_sms_id" )!.ObjValue;
                 var int_codigo = lst_valores.Find( x => x.StrNameParameter == "@int_error_cod" )!.ObjValue;
                 var str_codigo = lst_valores.Find( x => x.StrNameParameter == "@str_error" )!.ObjValue.Trim();
@@ -206,6 +226,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
                 respuesta.cuerpo = Funciones.ObtenerDatos( resultado );
                 respuesta.diccionario.Add( "str_error", str_codigo.ToString() );
                 respuesta.diccionario.Add( "int_sms_id", int_sms_id );
+                respuesta.diccionario.Add( "int_duplicado", int_duplicado );
             }
             catch (Exception ex)
             {

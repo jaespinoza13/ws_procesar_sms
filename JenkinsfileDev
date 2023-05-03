@@ -9,11 +9,11 @@ pipeline {
     environment {
         VERSION_DESPLIEGUE  = '1.0.0'
         VERSION_PRODUCCION  = '0.0.0'
-        NOMBRE_CONTENEDOR   = 'servicio-cuenta_inteligente'
-        NOMBRE_IMAGEN       = 'ws_cuentas_inteligentes'
+        NOMBRE_CONTENEDOR   = 'servicio-procesar_sms'
+        NOMBRE_IMAGEN       = 'ws_procesar_sms'
         PUERTO              = '6026'
         PUERTO_CONTENEDOR   = '80'
-        RUTA_CONFIG         = '/config/wsCuentasInteligentes/'
+        RUTA_CONFIG         = '/config/wsProcesarSms/'
     }
 
     stages {

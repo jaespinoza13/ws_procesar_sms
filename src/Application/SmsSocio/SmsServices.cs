@@ -9,6 +9,8 @@ using Application.SmsSocio.ValidarSms;
 using Application.SmsSocio.ProcesarTransf;
 using Application.SmsSocio.ValidarCodigoSms;
 using Application.SmsSocio.ValidarPalabraClave;
+using Application.SmsSocio.AgregarSms;
+using Application.SmsSocio.SmsPorProcesar;
 
 namespace Application.SmsSocio
 {
@@ -25,6 +27,36 @@ namespace Application.SmsSocio
             _clase = GetType().Name;
             _sms = sms;
             _transaccion= transaccion;
+        }
+
+        public async Task<ResSmsPorProcesar> GetSmsPorProcesar()
+        {
+            string strOperacion = "GET_SMS_POR_PROCESAR";
+            var log_body = new LogBody
+            {
+                str_id_transaccion = _transaccion,
+                dt_fecha_operacion = DateTime.ParseExact( DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss" ), "yyyy-MM-dd HH:mm:ss", null ),
+                str_operacion = strOperacion
+            };
+
+            await _logsService.SaveHeaderLogs( log_body, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+            ResSmsPorProcesar res_val = new();
+            try
+            {
+                RespuestaTransaccion res_tran = await _sms.GetSmsPorProcesar();
+
+                if (res_tran.codigo.Equals( "000" ))
+                {
+                    res_val.sms_procesar = Conversions.ConvertConjuntoDatosToListClass<SmsProcesar>( (ConjuntoDatos)res_tran.cuerpo )!;
+                }
+            }
+            catch (Exception ex)
+            {
+                await _logsService.SaveExceptionLogs( log_body.Spread( res_val ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
+                throw new ArgumentException();
+            }
+            await _logsService.SaveResponseLogs( log_body.Spread( res_val ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+            return res_val;
         }
 
         public async Task<ResValidarCodigoSms> ValidarCodigo(int int_codigo_sms)
@@ -138,7 +170,7 @@ namespace Application.SmsSocio
             }
         }
 
-        public async void GuardarSmsSocio(Sms sms, string str_sms_estado)
+        public async Task<ResAgregarSms> GuardarSmsSocio(ReqAgregarSms req_agregar_sms)
         {
             string strOperacion = "GUARDAR_SMS_SOCIO";
             var log_body = new LogBody
@@ -148,14 +180,15 @@ namespace Application.SmsSocio
                 str_operacion = strOperacion
             };
 
-            await _logsService.SaveHeaderLogs( log_body.Spread( sms, new { estado = str_sms_estado }), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
-            ResProcesarTransf respuesta = new();
+            await _logsService.SaveHeaderLogs( log_body.Spread( req_agregar_sms.sms, new { estado = req_agregar_sms.str_sms_estado } ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+            ResAgregarSms respuesta = new();
             try
             {
-                RespuestaTransaccion res_tran = await _sms.GuardarSmsSocio( sms, str_sms_estado );
+                RespuestaTransaccion res_tran = await _sms.GuardarSmsSocio( req_agregar_sms.sms, req_agregar_sms.str_sms_estado );
                 respuesta.str_res_estado_transaccion = (res_tran.codigo.Equals( "000" )) ? "OK" : "ERR";
                 respuesta.str_res_codigo = res_tran.codigo;
                 respuesta.str_res_info_adicional = res_tran.diccionario["str_error"].ToString();
+                respuesta.int_duplicado_sms = Convert.ToInt32(res_tran.diccionario["int_duplicado"]);
                 await _logsService.SaveResponseLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
             }
             catch (Exception ex)
@@ -163,6 +196,7 @@ namespace Application.SmsSocio
                 await _logsService.SaveExceptionLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
                 throw new ArgumentException();
             }
+            return respuesta;
         }
 
         public async void ActualizarEstadoSms(int int_sms_id, string str_estado_sms)

@@ -1,10 +1,10 @@
-﻿namespace Application.DatosSms.ProcesarSms
+﻿using Application.Common.Models;
+using Application.Common.ISO20022.Models;
+
+namespace Application.DatosSms.ProcesarSms
 {
-    public class ResProcesarSms
+    public class ResProcesarSms : ResComun
     {
-        public DateTime dt_fecha_operacion { get; set; } = DateTime.Now;
-        public string str_id_transaccion { get; set; } = String.Empty;
-        public string codigo { get; set; } = String.Empty;
-        public string mensaje { get; set; } = String.Empty;
+        public List<SmsProcesado> sms_procesados { get; set; }
     }
 }

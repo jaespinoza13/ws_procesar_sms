@@ -1,8 +1,8 @@
-﻿using Application.Common.ISO20022.Models;
+﻿using System.Text;
+using System.Text.Json;
 using Application.Common.Models;
 using Microsoft.Extensions.Options;
-using System.Text;
-using System.Text.Json;
+using Application.Common.ISO20022.Models;
 
 namespace WebUI.Middleware
 {
@@ -33,11 +33,11 @@ namespace WebUI.Middleware
             var password = _settings.auth_ws_procesar_sms_pass;
 
             var headers = httpContext.Request.Headers;
-            string authorization_header = Convert.ToString( headers.Authorization );
+            string authorization_header = Convert.ToString( headers["Authorization-Mego"] );
 
-            if (authorization_header != null && authorization_header.StartsWith( "Basic" ))
+            if (authorization_header != null && authorization_header.StartsWith( "Auth-Mego" ))
             {
-                string auth = authorization_header.Substring( "Basic ".Length ).Trim();
+                string auth = authorization_header.Substring( "Auth-Mego ".Length ).Trim();
 
                 var userPwd = Encoding.UTF8.GetString( Convert.FromBase64String( auth ) );
                 var user = userPwd.Substring( 0, userPwd.IndexOf( ":" ) );
