@@ -55,7 +55,7 @@ namespace Application.DatosSms.ProcesarSms
                             {
                                 response_sms.palabras_clave.ForEach( item =>
                                 {
-                                    if (item.palabra_clave.Equals( "BLOQUEAR" )) bol_existe_palabra = true; // Parámetro
+                                    if (item.palabra_clave.Equals( "BLOQUEAR" )) bol_existe_palabra = true;
                                 } );
 
                                 if (bol_existe_palabra)
