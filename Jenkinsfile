@@ -11,7 +11,7 @@ pipeline {
         VERSION_PRODUCCION  = '0.0.0'
         NOMBRE_CONTENEDOR   = 'servicio-procesar_sms'
         NOMBRE_IMAGEN       = 'ws_procesar_sms'
-        PUERTO              = '6026'
+        PUERTO              = '7001'
         PUERTO_CONTENEDOR   = '80'
         RUTA_CONFIG         = '/config/wsProcesarSms/'
     }
