@@ -2,7 +2,6 @@
 using Infrastructure.Services;
 using Infrastructure.MemoryCache;
 using Infrastructure.DailyRequest;
-using Infrastructure.ExternalAPIs;
 using Infrastructure.SessionControl;
 using Application.Common.Interfaces;
 using Infrastructure.Common.Interfaces;
@@ -22,9 +21,7 @@ public static class ConfigureInfrastructure
         services.AddSingleton<IParametersInMemory, ParametersInMemory>();
         services.AddSingleton<IParametrosDat, ParametrosDat>();
         services.AddTransient<IHttpService, HttpService>();
-        services.AddTransient<IWsAlfresco, WsAlfresco>();
         services.AddTransient<ISqlInjectionValidationService, SqlInjectionValidationService>();
-        services.AddTransient<IWsOtp, WsOtp>();
         services.AddSingleton<IOtpDat, OtpDat>();
         services.AddTransient<ISessionControl, SessionControl>();
         services.AddSingleton<ISesionDat, SesionDat>();

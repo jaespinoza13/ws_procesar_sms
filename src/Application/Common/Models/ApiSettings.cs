@@ -42,10 +42,6 @@
         public bool valida_peticiones_diarias { get; set; }
         public int timeOutHttp { get; set; }
 
-
-        public string servicio_ws_otp { get; set; } = String.Empty;
-        public string servicio_ws_alfresco { get; set; } = String.Empty;
-
         public string auth_ws_procesar_sms_user { get; set; } = String.Empty;
 
         public string auth_ws_procesar_sms_pass { get; set; } = String.Empty;
