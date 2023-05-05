@@ -2,11 +2,11 @@
 using System.Reflection;
 using Application.Interfaz;
 using Application.SmsSocio;
+using Application.Common.Models;
 using Application.Common.Interfaces;
 using Application.SmsSocio.ValidarSms;
 using Application.SmsSocio.ProcesarTransf;
 using Application.SmsSocio.SmsPorProcesar;
-using Application.Common.Models;
 
 namespace Application.DatosSms.ProcesarSms
 {

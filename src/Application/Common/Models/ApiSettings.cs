@@ -45,7 +45,6 @@
         public string auth_ws_procesar_sms_user { get; set; } = String.Empty;
 
         public string auth_ws_procesar_sms_pass { get; set; } = String.Empty;
-        public string auth_ws_otp { get; set; } = String.Empty;
                 
         public int mostrar_descripcion_badrequest { get; set; }
 
