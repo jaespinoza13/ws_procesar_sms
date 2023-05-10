@@ -23,6 +23,7 @@ namespace WebUI.Controllers
         public WsProcesarSmsController(IOptionsMonitor<ApiSettings> options) => _settings = options.CurrentValue;
 
         // POST: api/servicio_procesar_sms/OBTENER_SMS
+        // Para uso exclusivo de eclipsoft
         [HttpPost( "OBTENER_SMS" )]
         [Produces( "application/json" )]
         public async Task<ResObtenerSms> ObtenerSms(ReqObtenerSms reqObtenerSms)
@@ -31,6 +32,7 @@ namespace WebUI.Controllers
         }
 
         // POST: api/servicio_procesar_sms/PROCESAR_SMS
+        // Para uso del servicio windows
         [HttpPost( "PROCESAR_SMS" )]
         [Produces( "application/json" )]
         public async Task<ResProcesarSms> ProcesarSms(ReqProcesarSms reqProcesarSms)

@@ -44,6 +44,7 @@ namespace Application.DatosSms.ProcesarSms
                 {
                     if(sms_list.sms_procesar.Count > 0)
                     {
+                        // ForEach asyncrono, para esperar a que se ejecute todo el proceso de peticion a la base de datos antes de continuar con los siguientes procesos
                         await Parallel.ForEachAsync(sms_list.sms_procesar, async (item_sms, _) =>
                         {
                             int_sms_id = item_sms.int_sms_id;
@@ -55,7 +56,7 @@ namespace Application.DatosSms.ProcesarSms
                             {
                                 response_sms.palabras_clave.ForEach( item =>
                                 {
-                                    if (item.palabra_clave.Equals( "BLOQUEAR" )) bol_existe_palabra = true;
+                                    if (item.palabra_clave.Equals( "BLOQUEAR" )) bol_existe_palabra = true; // Parametrizar palabra clave
                                 } );
 
                                 if (bol_existe_palabra)

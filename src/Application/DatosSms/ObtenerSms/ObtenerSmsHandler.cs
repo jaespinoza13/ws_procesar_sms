@@ -27,6 +27,7 @@ namespace Application.DatosSms.ObtenerSms
             ResObtenerSms proveedor_response = new ResObtenerSms();
             proveedor_response.LlenarResHeader( req_obtener_sms );
 
+            // Instanciar la clase SmsServices --> Application/SmsSocio/SmsServices
             SmsServices sms = new SmsServices( _logsService, _mensaje, proveedor_response.str_id_transaccion );
 
             await _logsService.SaveHeaderLogs( req_obtener_sms, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
