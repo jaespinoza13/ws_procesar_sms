@@ -53,34 +53,34 @@ namespace Infrastructure.gRPC_Clients.Sybase
             return respuesta;
         }
 
-        public async Task<RespuestaTransaccion> ValidarCodigoSms(int int_codigo_sms)
-        {
-            RespuestaTransaccion respuesta = new RespuestaTransaccion();
+        //public async Task<RespuestaTransaccion> ValidarCodigoSms(int int_codigo_sms)
+        //{
+        //    RespuestaTransaccion respuesta = new RespuestaTransaccion();
 
-            try
-            {
-                DatosSolicitud ds = new();
+        //    try
+        //    {
+        //        DatosSolicitud ds = new();
 
-                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_codigo_sms", TipoDato = TipoDato.Integer, ObjValue = int_codigo_sms.ToString() } );
+        //        ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_codigo_sms", TipoDato = TipoDato.Integer, ObjValue = int_codigo_sms.ToString() } );
 
-                ds.NombreSP = "stp_validar_codigo_sms";
-                ds.NombreBD = _settings.DB_meg_servicios;
+        //        ds.NombreSP = "validar_codigo_sms";
+        //        ds.NombreBD = _settings.DB_meg_servicios;
 
-                var resultado = _objClienteDal.ExecuteDataSet( ds );
-                var lst_valores = new List<ParametroSalidaValores>();
+        //        var resultado = _objClienteDal.ExecuteDataSet( ds );
+        //        var lst_valores = new List<ParametroSalidaValores>();
 
-                foreach (var item in resultado.ListaPSalidaValores) lst_valores.Add( item );
-                respuesta.codigo = "0".ToString().Trim().PadLeft( 3, '0' );
-                respuesta.cuerpo = Funciones.ObtenerDatos( resultado );
-            }
-            catch (Exception ex)
-            {
-                respuesta.codigo = "003";
-                respuesta.diccionario.Add( "str_error", ex.ToString() );
-               await _logsService.SaveExcepcionDataBaseSybase( respuesta, MethodBase.GetCurrentMethod()!.Name, ex, _str_clase );
-            }
-            return respuesta;
-        }
+        //        foreach (var item in resultado.ListaPSalidaValores) lst_valores.Add( item );
+        //        respuesta.codigo = "0".ToString().Trim().PadLeft( 3, '0' );
+        //        respuesta.cuerpo = Funciones.ObtenerDatos( resultado );
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        respuesta.codigo = "003";
+        //        respuesta.diccionario.Add( "str_error", ex.ToString() );
+        //       await _logsService.SaveExcepcionDataBaseSybase( respuesta, MethodBase.GetCurrentMethod()!.Name, ex, _str_clase );
+        //    }
+        //    return respuesta;
+        //}
 
         public async Task<RespuestaTransaccion> ValidarSms(ReqValidarSms reqValidarSms)
         {
@@ -95,7 +95,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@str_error", TipoDato = TipoDato.VarChar } );
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@int_error_cod", TipoDato = TipoDato.Integer } );
 
-                ds.NombreSP = "stp_validar_transaccion_sms";
+                ds.NombreSP = "validar_transaccion_sms";
                 ds.NombreBD = _settings.DB_meg_servicios;
 
                 var resultado = _objClienteDal.ExecuteDataSet( ds );
@@ -133,7 +133,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@str_error", TipoDato = TipoDato.VarChar } );
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@int_error_cod", TipoDato = TipoDato.Integer } );
 
-                ds.NombreSP = "stp_procesar_transferencias";
+                ds.NombreSP = "procesar_transferencias";
                 ds.NombreBD = _settings.DB_meg_servicios;
 
                 var resultado = _objClienteDal.ExecuteDataSet( ds );

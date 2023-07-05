@@ -7,7 +7,7 @@ using Application.Common.Converting;
 using Application.Common.Interfaces;
 using Application.SmsSocio.ValidarSms;
 using Application.SmsSocio.ProcesarTransf;
-using Application.SmsSocio.ValidarCodigoSms;
+//using Application.SmsSocio.ValidarCodigoSms;
 using Application.SmsSocio.ValidarPalabraClave;
 using Application.SmsSocio.AgregarSms;
 using Application.SmsSocio.SmsPorProcesar;
@@ -59,34 +59,34 @@ namespace Application.SmsSocio
             return res_val;
         }
 
-        public async Task<ResValidarCodigoSms> ValidarCodigo(int int_codigo_sms)
-        {
-            string strOperacion = "VALIDAR_CODIGO";
-            var log_body = new LogBody
-            {
-                str_id_transaccion = _transaccion,
-                dt_fecha_operacion = DateTime.ParseExact( DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss" ), "yyyy-MM-dd HH:mm:ss", null ),
-                str_operacion = strOperacion
-            };
+        //public async Task<ResValidarCodigoSms> ValidarCodigo(int int_codigo_sms)
+        //{
+        //    string strOperacion = "VALIDAR_CODIGO";
+        //    var log_body = new LogBody
+        //    {
+        //        str_id_transaccion = _transaccion,
+        //        dt_fecha_operacion = DateTime.ParseExact( DateTime.Now.ToString( "yyyy-MM-dd HH:mm:ss" ), "yyyy-MM-dd HH:mm:ss", null ),
+        //        str_operacion = strOperacion
+        //    };
 
-            await _logsService.SaveHeaderLogs( log_body.Spread( new { codigo_sms_validar = int_codigo_sms } ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
-            ResValidarCodigoSms res_val = new();
-            try
-            {
-                RespuestaTransaccion res_tran = await _sms.ValidarCodigoSms( int_codigo_sms );
+        //    await _logsService.SaveHeaderLogs( log_body.Spread( new { codigo_sms_validar = int_codigo_sms } ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+        //    ResValidarCodigoSms res_val = new();
+        //    try
+        //    {
+        //        RespuestaTransaccion res_tran = await _sms.ValidarCodigoSms( int_codigo_sms );
 
-                if (res_tran.codigo.Equals( "000" ))
-                {
-                    res_val = Conversions.ConvertConjuntoDatosToClass<ResValidarCodigoSms>( (ConjuntoDatos)res_tran.cuerpo )!;
-                }
-            } catch(Exception ex)
-            {
-                await _logsService.SaveExceptionLogs( log_body.Spread( res_val), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
-                throw new ArgumentException();
-            }
-            await _logsService.SaveResponseLogs( log_body.Spread( res_val ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
-            return res_val;
-        }
+        //        if (res_tran.codigo.Equals( "000" ))
+        //        {
+        //            res_val = Conversions.ConvertConjuntoDatosToClass<ResValidarCodigoSms>( (ConjuntoDatos)res_tran.cuerpo )!;
+        //        }
+        //    } catch(Exception ex)
+        //    {
+        //        await _logsService.SaveExceptionLogs( log_body.Spread( res_val), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
+        //        throw new ArgumentException();
+        //    }
+        //    await _logsService.SaveResponseLogs( log_body.Spread( res_val ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+        //    return res_val;
+        //}
 
         public async Task<ResValidarSms> ValidarSms(ReqValidarSms reqValidarSms)
         {
