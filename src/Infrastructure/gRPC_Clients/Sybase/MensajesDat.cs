@@ -133,7 +133,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@str_error", TipoDato = TipoDato.VarChar } );
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@int_error_cod", TipoDato = TipoDato.Integer } );
 
-                ds.NombreSP = "procesar_transferencias";
+                ds.NombreSP = "set_procesar_transferencias";
                 ds.NombreBD = _settings.DB_meg_servicios;
 
                 var resultado = _objClienteDal.ExecuteDataSet( ds );
