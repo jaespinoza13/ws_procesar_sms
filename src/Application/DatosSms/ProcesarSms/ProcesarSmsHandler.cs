@@ -54,13 +54,13 @@ namespace Application.DatosSms.ProcesarSms
 
                             if (response_sms.str_res_estado_transaccion == "OK")
                             {
-                                response_sms.palabras_clave.ForEach( item =>
-                                {
-                                    if (item.palabra_clave.Equals( "BLOQUEAR" )) bol_existe_palabra = true; // Parametrizar palabra clave
-                                } );
+                                //response_sms.palabras_clave.ForEach( item =>
+                                //{
+                                //    if (item.palabra_clave.Equals( "BLOQUEAR" )) bol_existe_palabra = true; // Parametrizar palabra clave
+                                //} );
 
-                                if (bol_existe_palabra)
-                                {
+                                //if (bol_existe_palabra)
+                                //{
                                     ReqProcesarTransf req_procs_transf = new ReqProcesarTransf
                                     {
                                         str_num_telefono = item_sms.str_telefono,
@@ -84,12 +84,12 @@ namespace Application.DatosSms.ProcesarSms
                                     sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_ERROR" );
                                     list.Add( new SmsProcesado { codigo = "005", mensaje = $"El Sms con ID. {item_sms.int_sms_id} no contiene palabras clave." } );
                                 }
-                            }
-                            else
-                            {
-                                sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_ERROR" );
-                                list.Add( new SmsProcesado { codigo = "005", mensaje = $"El Sms con ID. {item_sms.int_sms_id} no contiene palabras clave." } );
-                            }
+                            //}
+                            //else
+                            //{
+                            //    sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_ERROR" );
+                            //    list.Add( new SmsProcesado { codigo = "005", mensaje = $"El Sms con ID. {item_sms.int_sms_id} no contiene palabras clave." } );
+                            //}
                         });
                     } else
                     {
