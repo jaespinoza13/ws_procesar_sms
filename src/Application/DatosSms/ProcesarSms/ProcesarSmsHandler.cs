@@ -15,6 +15,7 @@ namespace Application.DatosSms.ProcesarSms
         public readonly ILogs _logsService;
         private readonly string str_clase;
         private readonly IMensajesDat _mensaje;
+        private string str_usuario;
 
         public ProcesarSmsHandler(ILogs logsService, IMensajesDat mensaje)
         {
@@ -50,7 +51,7 @@ namespace Application.DatosSms.ProcesarSms
                             int_sms_id = item_sms.int_sms_id;
                             ReqValidarSms req_valid_sms = new ReqValidarSms();
                             req_valid_sms.int_sms_id = item_sms.int_sms_id;
-                            var response_sms = await sms.ValidarSms( req_valid_sms );
+                            var response_sms = await sms.ValidarSms( req_valid_sms, request.str_login, request.str_ip_dispositivo );
 
                             if (response_sms.str_res_estado_transaccion == "OK")
                             {
@@ -67,21 +68,26 @@ namespace Application.DatosSms.ProcesarSms
                                         str_fecha_transaccion = item_sms.str_fecha_recepcion,
                                         int_sms_id = item_sms.int_sms_id
                                     };
+                                            
+
+
+
+
                                     var resp_proces_transf = await sms.ProcesarTransferencia( req_procs_transf );
 
                                     if (resp_proces_transf.str_res_estado_transaccion == "OK")
                                     {
-                                        sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_OK" );
+                                        sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_OK" , request.str_login, request.str_ip_dispositivo);
                                     }
                                     else
                                     {
-                                        sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_ERROR" );
+                                        sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_ERROR", request.str_login, request.str_ip_dispositivo );
                                     }
                                     list.Add( new SmsProcesado { codigo = resp_proces_transf.str_res_codigo, mensaje = $"El Sms con ID. {item_sms.int_sms_id} ha sido procesado." } );
                                 }
                                 else
                                 {
-                                    sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_ERROR" );
+                                    sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_ERROR", request.str_login, request.str_ip_dispositivo );
                                     list.Add( new SmsProcesado { codigo = "005", mensaje = $"El Sms con ID. {item_sms.int_sms_id} no contiene palabras clave." } );
                                 }
                             //}
@@ -108,7 +114,7 @@ namespace Application.DatosSms.ProcesarSms
             }
             catch (Exception exception)
             {
-                sms.ActualizarEstadoSms( int_sms_id, "EPS_PROCESADO_ERROR" );
+                sms.ActualizarEstadoSms( int_sms_id, "EPS_PROCESADO_ERROR", request.str_id_usuario, request.str_ip_dispositivo );
                 await _logsService.SaveExceptionLogs( proveedor_response, strOperacion, MethodBase.GetCurrentMethod()!.Name, str_clase, exception );
                 throw new ArgumentException( "Error" )!;
             }

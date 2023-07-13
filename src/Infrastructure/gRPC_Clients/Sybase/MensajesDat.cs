@@ -82,7 +82,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
         //    return respuesta;
         //}
 
-        public async Task<RespuestaTransaccion> ValidarSms(ReqValidarSms reqValidarSms)
+        public async Task<RespuestaTransaccion> ValidarSms(ReqValidarSms reqValidarSms, string str_login, string str_ip_dispositivo)
         {
             RespuestaTransaccion respuesta = new();
 
@@ -91,10 +91,11 @@ namespace Infrastructure.gRPC_Clients.Sybase
                 DatosSolicitud ds = new();
 
                 ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_sms_id", TipoDato = TipoDato.Integer, ObjValue = reqValidarSms.int_sms_id.ToString() } );
-
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@str_error", TipoDato = TipoDato.VarChar } );
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@int_error_cod", TipoDato = TipoDato.Integer } );
-
+                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_usuario", TipoDato = TipoDato.VarChar, ObjValue = str_login } );
+                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_terminal", TipoDato = TipoDato.VarChar, ObjValue = str_ip_dispositivo } );
+                
                 ds.NombreSP = "set_validar_transaccion_sms";
                 ds.NombreBD = _settings.DB_meg_servicios;
 
@@ -237,7 +238,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
             return respuesta;
         }
 
-        public async Task<RespuestaTransaccion> ActualizarEstadoProcesoSms(int int_sms_id, string str_estado_sms)
+        public async Task<RespuestaTransaccion> ActualizarEstadoProcesoSms(int int_sms_id, string str_estado_sms, string str_login, string str_ip_dispositivo)
         {
             RespuestaTransaccion respuesta = new();
 
@@ -247,9 +248,10 @@ namespace Infrastructure.gRPC_Clients.Sybase
 
                 ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_sms_id", TipoDato = TipoDato.Integer, ObjValue = int_sms_id.ToString() } );
                 ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_estado", TipoDato = TipoDato.VarChar, ObjValue = str_estado_sms } );
-
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@str_error", TipoDato = TipoDato.VarChar } );
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@int_error_cod", TipoDato = TipoDato.Integer } );
+                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_usuario", TipoDato = TipoDato.VarChar, ObjValue = str_login } );
+                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_terminal", TipoDato = TipoDato.VarChar, ObjValue = str_ip_dispositivo } );
 
                 ds.NombreSP = "update_estado_proceso_sms";
                 ds.NombreBD = _settings.DB_meg_servicios;

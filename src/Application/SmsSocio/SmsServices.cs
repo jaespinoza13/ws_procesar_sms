@@ -11,6 +11,8 @@ using Application.SmsSocio.ProcesarTransf;
 using Application.SmsSocio.ValidarPalabraClave;
 using Application.SmsSocio.AgregarSms;
 using Application.SmsSocio.SmsPorProcesar;
+using Org.BouncyCastle.Asn1.Ocsp;
+using MediatR;
 
 namespace Application.SmsSocio
 {
@@ -88,7 +90,7 @@ namespace Application.SmsSocio
         //    return res_val;
         //}
 
-        public async Task<ResValidarSms> ValidarSms(ReqValidarSms reqValidarSms)
+        public async Task<ResValidarSms> ValidarSms(ReqValidarSms reqValidarSms, string str_login, string str_ip_dispositivo)
         {
             string strOperacion = "VALIDAR_SMS";
             var log_body = new LogBody
@@ -102,7 +104,7 @@ namespace Application.SmsSocio
             ResValidarSms respuesta = new();
             try
             {
-                RespuestaTransaccion res_tran = await _sms.ValidarSms( reqValidarSms );
+                RespuestaTransaccion res_tran = await _sms.ValidarSms( reqValidarSms, str_login, str_ip_dispositivo );
                 respuesta.str_res_estado_transaccion = (res_tran.codigo.Equals( "000" )) ? "OK" : "ERR";
                 respuesta.str_res_codigo = res_tran.codigo;
                 respuesta.str_res_info_adicional = res_tran.diccionario["str_error"].ToString();
@@ -199,7 +201,7 @@ namespace Application.SmsSocio
             return respuesta;
         }
 
-        public async void ActualizarEstadoSms(int int_sms_id, string str_estado_sms)
+        public async void ActualizarEstadoSms(int int_sms_id, string str_estado_sms, string str_login, string str_ip_dispositivo)
         {
             string strOperacion = "ACTUALIZAR_ESTADO_SMS";
             var log_body = new LogBody
@@ -213,7 +215,7 @@ namespace Application.SmsSocio
             ResProcesarTransf respuesta = new();
             try
             {
-                RespuestaTransaccion res_tran = await _sms.ActualizarEstadoProcesoSms( int_sms_id, str_estado_sms );
+                RespuestaTransaccion res_tran = await _sms.ActualizarEstadoProcesoSms( int_sms_id, str_estado_sms, str_login, str_ip_dispositivo );
                 respuesta.str_res_estado_transaccion = (res_tran.codigo.Equals( "000" )) ? "OK" : "ERR";
                 respuesta.str_res_codigo = res_tran.codigo;
                 respuesta.str_res_info_adicional = res_tran.diccionario["str_error"].ToString();
