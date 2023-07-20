@@ -5,6 +5,6 @@ namespace Application.Parametros
 {
     public class ResParametro : ResComun
     {
-        public List<ParametroSistema> parametros { get; set; }
+        public List<ParametroSistema> parametros { get; set; } = new List<ParametroSistema>();
     }
 }

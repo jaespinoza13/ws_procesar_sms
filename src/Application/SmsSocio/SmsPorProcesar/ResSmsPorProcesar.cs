@@ -4,6 +4,6 @@ namespace Application.SmsSocio.SmsPorProcesar
 {
     public class ResSmsPorProcesar
     {
-        public List<SmsProcesar> sms_procesar { get; set; }
+        public List<SmsProcesar> sms_procesar { get; set; } = new List<SmsProcesar>();
     }
 }

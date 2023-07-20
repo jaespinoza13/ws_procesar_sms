@@ -5,6 +5,6 @@ namespace Application.SmsSocio.ValidarPalabraClave
 {
     public class ResValidarPalabraClave : ResComun
     {
-        public List<PalabrasSms> palabras_clave { get; set; }
+        public List<PalabrasSms> palabras_clave { get; set; } = new List<PalabrasSms>();
     }
 }

@@ -18,7 +18,7 @@ namespace WebUI.Middleware
     {
         private readonly RequestDelegate _next;
         private readonly ApiSettings _settings;
-        private readonly IConfiguration _config;
+        public readonly IConfiguration _config; // Private --> Public 
 
         public Authorization(RequestDelegate next, IOptionsMonitor<ApiSettings> settings, IConfiguration config)
         {
@@ -59,7 +59,7 @@ namespace WebUI.Middleware
             }
         }
 
-        internal async Task ResException(HttpContext httpContext, String infoAdicional, int statusCode, string str_res_id_servidor)
+        internal static async Task ResException(HttpContext httpContext, String infoAdicional, int statusCode, string str_res_id_servidor)
         {
             ResException respuesta = new();
 

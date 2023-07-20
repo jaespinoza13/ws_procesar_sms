@@ -36,7 +36,7 @@ namespace Application.Parametros
             catch (Exception ex)
             {
                 await _logsService.SaveExceptionLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
-                throw new ArgumentException();
+                throw new ArgumentException("Error al obtener los parametros.");
             }
         }
     }

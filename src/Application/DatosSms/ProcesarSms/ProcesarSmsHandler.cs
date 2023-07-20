@@ -15,8 +15,7 @@ namespace Application.DatosSms.ProcesarSms
         public readonly ILogs _logsService;
         private readonly string str_clase;
         private readonly IMensajesDat _mensaje;
-        private string str_usuario;
-
+        
         public ProcesarSmsHandler(ILogs logsService, IMensajesDat mensaje)
         {
             _logsService = logsService;
@@ -28,7 +27,6 @@ namespace Application.DatosSms.ProcesarSms
         {
             List<SmsProcesado> list = new List<SmsProcesado>();
             string strOperacion = "PROCESAR_SMS";
-            bool bol_existe_palabra = false;
             int int_sms_id = -1;
 
             ResProcesarSms proveedor_response = new ResProcesarSms();
@@ -69,10 +67,6 @@ namespace Application.DatosSms.ProcesarSms
                                         int_sms_id = item_sms.int_sms_id
                                     };
                                             
-
-
-
-
                                     var resp_proces_transf = await sms.ProcesarTransferencia( req_procs_transf );
 
                                     if (resp_proces_transf.str_res_estado_transaccion == "OK")

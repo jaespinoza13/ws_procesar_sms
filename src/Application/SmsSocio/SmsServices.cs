@@ -118,7 +118,7 @@ namespace Application.SmsSocio
             catch (Exception ex)
             {
                 await _logsService.SaveExceptionLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
-                throw new ArgumentException();
+                throw new ArgumentException( "Error al validar el sms.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Application.SmsSocio
             catch (Exception ex)
             {
                 await _logsService.SaveExceptionLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
-                throw new ArgumentException();
+                throw new ArgumentException( "Error al procesar las transferencias." );
             }
         }
 
@@ -196,7 +196,7 @@ namespace Application.SmsSocio
             catch (Exception ex)
             {
                 await _logsService.SaveExceptionLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
-                throw new ArgumentException();
+                throw new ArgumentException( "Error al almacenar el sms." );
             }
             return respuesta;
         }
@@ -224,7 +224,7 @@ namespace Application.SmsSocio
             catch (Exception ex)
             {
                 await _logsService.SaveExceptionLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
-                throw new ArgumentException();
+                throw new ArgumentException( "Error al actualizar el estado del sms." );
             }
         }
     }

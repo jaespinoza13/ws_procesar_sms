@@ -12,6 +12,7 @@ namespace WebUI.Filters
     {
         public void OnActionExecuted(ActionExecutedContext context)
         {
+            throw new NotImplementedException();
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
@@ -31,7 +32,7 @@ namespace WebUI.Filters
         }
 
 
-        private bool validarClaims(ActionExecutingContext context)
+        private static bool validarClaims(ActionExecutingContext context)
         {
             var blValidacion = false;
             context.HttpContext.Request.EnableBuffering();
@@ -71,3 +72,4 @@ namespace WebUI.Filters
 
     }
 }
+

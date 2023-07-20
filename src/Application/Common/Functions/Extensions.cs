@@ -20,7 +20,9 @@ namespace Application.Common.Functions
 
             var objType = CreateClass( properties );
 
-            var finalObj = Activator.CreateInstance( objType );
+            //var finalObj = Activator.CreateInstance( objType );
+            object? finalObj;
+            finalObj = Activator.CreateInstance( objType );
             foreach (var prop in objType.GetProperties())
                 prop.SetValue( finalObj, properties[prop.Name].propValue );
 

@@ -6,6 +6,6 @@ namespace Application.DatosSms.ObtenerSms
 {
     public class ReqObtenerSms : Header, IRequest<ResObtenerSms>
     {
-        public Sms sms { get; set; }
+        public Sms sms { get; set; } = new Sms();
     }
 }

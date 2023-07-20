@@ -28,7 +28,7 @@ public static class CryptographyRSA
         }
         catch (Exception ex)
         {
-            throw new Exception( "Error GenerarLlavePublicaPrivada " + ex );
+            throw new ArgumentNullException( "Error GenerarLlavePublicaPrivada " + ex );
         }
     }
     public class DatosLlaveRsa

@@ -5,6 +5,6 @@ namespace Application.DatosSms.ProcesarSms
 {
     public class ResProcesarSms : ResComun
     {
-        public List<SmsProcesado> sms_procesados { get; set; }
+        public List<SmsProcesado> sms_procesados { get; set; } = new List<SmsProcesado>();
     }
 }
