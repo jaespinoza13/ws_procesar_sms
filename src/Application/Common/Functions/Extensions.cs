@@ -19,14 +19,20 @@ namespace Application.Common.Functions
                 .ToDictionary( t => t.p.Name, t => (propName: t.p.Name, propType: t.p.PropertyType, propValue: t.p.GetValue( t.o )) );
 
             var objType = CreateClass( properties );
+            var finalObj = Activator.CreateInstance( objType );
+            if (finalObj != null)
+            {
+                foreach (var prop in objType.GetProperties())
+                    prop.SetValue( finalObj, properties[prop.Name].propValue );
 
-            //var finalObj = Activator.CreateInstance( objType );
-            object? finalObj;
-            finalObj = Activator.CreateInstance( objType );
-            foreach (var prop in objType.GetProperties())
-                prop.SetValue( finalObj, properties[prop.Name].propValue );
-
-            return finalObj;
+                return finalObj;
+            }
+            else
+            {
+                return finalObj = "";
+            }
+            
+            
         }
 
         const MethodAttributes METHOD_ATTRIBUTES = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;
