@@ -20,6 +20,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentación", "Documentación", "{F79C3CA5-B4F3-49CE-A733-EFA91EC39DA7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Análisis", "Análisis", "{999D3296-30A8-47BF-8D58-F03EA0B7EB7D}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Documentos Frank\Acta_de_reunion_Sms_bloqueo_cuentas.docx = ..\..\Documentos Frank\Acta_de_reunion_Sms_bloqueo_cuentas.docx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Arquitectura", "Arquitectura", "{AA77EEBC-DA41-4D19-B39B-53866C1DD1F4}"
+	ProjectSection(SolutionItems) = preProject
+		\\192.168.55.14\raul_condolo\RespaldoDesarrollo\Frank_Saca\ARQProcesarSMS.drawio = \\192.168.55.14\raul_condolo\RespaldoDesarrollo\Frank_Saca\ARQProcesarSMS.drawio
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Otros", "Otros", "{9DCABC2C-EBE4-4B19-887C-A78619B60E5A}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Documentos Frank\Manual servicio windows (004).docx = ..\..\Documentos Frank\Manual servicio windows (004).docx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Prueba", "Prueba", "{D52BD48F-AC81-446C-BAD0-470932739946}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +70,10 @@ Global
 		{42199A53-354E-40DA-8E95-91E37CF9DFE3} = {AA2E5CB1-BE1B-4910-8852-F7FD8C5099E9}
 		{AB571EA4-AD9C-491B-AA80-F9210B92AC89} = {AA2E5CB1-BE1B-4910-8852-F7FD8C5099E9}
 		{1B6854FC-9D9C-4188-A9DF-C7059EB979DE} = {AA2E5CB1-BE1B-4910-8852-F7FD8C5099E9}
+		{999D3296-30A8-47BF-8D58-F03EA0B7EB7D} = {F79C3CA5-B4F3-49CE-A733-EFA91EC39DA7}
+		{AA77EEBC-DA41-4D19-B39B-53866C1DD1F4} = {F79C3CA5-B4F3-49CE-A733-EFA91EC39DA7}
+		{9DCABC2C-EBE4-4B19-887C-A78619B60E5A} = {F79C3CA5-B4F3-49CE-A733-EFA91EC39DA7}
+		{D52BD48F-AC81-446C-BAD0-470932739946} = {F79C3CA5-B4F3-49CE-A733-EFA91EC39DA7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {12F51BBC-176E-41AF-BA2A-FF01D98D98C1}
