@@ -20,19 +20,8 @@ namespace Application.Common.Functions
 
             var objType = CreateClass( properties );
             var finalObj = Activator.CreateInstance( objType );
-            if (finalObj != null)
-            {
-                foreach (var prop in objType.GetProperties())
-                    prop.SetValue( finalObj, properties[prop.Name].propValue );
+            return finalObj;
 
-                return finalObj;
-            }
-            else
-            {
-                return finalObj;
-            }
-            
-            
         }
 
         const MethodAttributes METHOD_ATTRIBUTES = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;

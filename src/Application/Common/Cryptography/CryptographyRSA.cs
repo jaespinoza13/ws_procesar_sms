@@ -59,26 +59,26 @@ public static class CryptographyRSA
 
         return bytes;
     }
-    public static string Encrypt ( string input, string key )
-    {
-        var stringReader = new StringReader(key);
-        var serializer = new XmlSerializer(typeof(RSAParameters));
-        var deskey = (RSAParameters)serializer.Deserialize(stringReader)!;
+    //public static string Encrypt ( string input, string key )
+    //{
+    //    var stringReader = new StringReader(key);
+    //    var serializer = new XmlSerializer(typeof(RSAParameters));
+    //    var deskey = (RSAParameters)serializer.Deserialize(stringReader)!;
 
-        var bytes = Encrypt(
-            Encoding.UTF8.GetBytes(input),
-            deskey);
+    //    var bytes = Encrypt(
+    //        Encoding.UTF8.GetBytes(input),
+    //        deskey);
 
-        return Convert.ToBase64String(bytes);
-    }
-    public static byte[] Encrypt ( byte[] input, RSAParameters key )
-    {
-        using var rsa = RSA.Create(key);
+    //    return Convert.ToBase64String(bytes);
+    //}
+    //public static byte[] Encrypt ( byte[] input, RSAParameters key )
+    //{
+    //    using var rsa = RSA.Create(key);
 
-        var bytes = rsa.Encrypt(
-            input,
-            RSAEncryptionPadding.Pkcs1);
+    //    var bytes = rsa.Encrypt(
+    //        input,
+    //        RSAEncryptionPadding.Pkcs1);
 
-        return bytes;
-    }
+    //    return bytes;
+    //}
 }

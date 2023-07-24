@@ -75,6 +75,7 @@ internal class ParametersInMemory : IParametersInMemory
     {
         if (DateTime.Compare( DateTime.Now, dt_fecha_codigos.AddDays( 1 ) ) > 0)
         {
+            // LoadParameters();
         }
     }
 
