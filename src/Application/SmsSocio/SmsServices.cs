@@ -201,7 +201,7 @@ namespace Application.SmsSocio
             return respuesta;
         }
 
-        public async void ActualizarEstadoSms(int int_sms_id, string str_estado_sms, string str_login, string str_ip_dispositivo)
+        public async Task ActualizarEstadoSms(int int_sms_id, string str_estado_sms, string str_login, string str_ip_dispositivo)
         {
             string strOperacion = "ACTUALIZAR_ESTADO_SMS";
             var log_body = new LogBody
