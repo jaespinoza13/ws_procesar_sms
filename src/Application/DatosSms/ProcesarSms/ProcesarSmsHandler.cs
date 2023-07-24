@@ -43,54 +43,16 @@ namespace Application.DatosSms.ProcesarSms
                 {
                     if(sms_list.sms_procesar.Count > 0)
                     {
-                        // ForEach asyncrono, para esperar a que se ejecute todo el proceso de peticion a la base de datos antes de continuar con los siguientes procesos
-                        await Parallel.ForEachAsync(sms_list.sms_procesar, async (item_sms, _) =>
+                       
+                        await Parallel.ForEachAsync( sms_list.sms_procesar, async (item_sms, _) =>
                         {
                             int_sms_id = item_sms.int_sms_id;
                             ReqValidarSms req_valid_sms = new ReqValidarSms();
                             req_valid_sms.int_sms_id = item_sms.int_sms_id;
                             var response_sms = await sms.ValidarSms( req_valid_sms, request.str_login, request.str_ip_dispositivo );
+                            await response_method( request, item_sms, list, sms, response_sms );
 
-                            if (response_sms.str_res_estado_transaccion == "OK")
-                            {
-                                //response_sms.palabras_clave.ForEach( item =>
-                                //{
-                                //    if (item.palabra_clave.Equals( "BLOQUEAR" )) bol_existe_palabra = true; // Parametrizar palabra clave
-                                //} );
-
-                                //if (bol_existe_palabra)
-                                //{
-                                    ReqProcesarTransf req_procs_transf = new ReqProcesarTransf
-                                    {
-                                        str_num_telefono = item_sms.str_telefono,
-                                        str_fecha_transaccion = item_sms.str_fecha_recepcion,
-                                        int_sms_id = item_sms.int_sms_id
-                                    };
-                                            
-                                    var resp_proces_transf = await sms.ProcesarTransferencia( req_procs_transf );
-
-                                    if (resp_proces_transf.str_res_estado_transaccion == "OK")
-                                    {
-                                        sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_OK" , request.str_login, request.str_ip_dispositivo);
-                                    }
-                                    else
-                                    {
-                                        sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_ERROR", request.str_login, request.str_ip_dispositivo );
-                                    }
-                                    list.Add( new SmsProcesado { codigo = resp_proces_transf.str_res_codigo, mensaje = $"El Sms con ID. {item_sms.int_sms_id} ha sido procesado." } );
-                                }
-                                else
-                                {
-                                    sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_ERROR", request.str_login, request.str_ip_dispositivo );
-                                    list.Add( new SmsProcesado { codigo = "005", mensaje = $"El Sms con ID. {item_sms.int_sms_id} no contiene palabras clave." } );
-                                }
-                            //}
-                            //else
-                            //{
-                            //    sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_ERROR" );
-                            //    list.Add( new SmsProcesado { codigo = "005", mensaje = $"El Sms con ID. {item_sms.int_sms_id} no contiene palabras clave." } );
-                            //}
-                        });
+                        } );
                     } else
                     {
                         proveedor_response.str_res_codigo = "006";
@@ -111,6 +73,37 @@ namespace Application.DatosSms.ProcesarSms
                 sms.ActualizarEstadoSms( int_sms_id, "EPS_PROCESADO_ERROR", request.str_id_usuario, request.str_ip_dispositivo );
                 await _logsService.SaveExceptionLogs( proveedor_response, strOperacion, MethodBase.GetCurrentMethod()!.Name, str_clase, exception );
                 throw new ArgumentException( "Error" )!;
+            }
+        }
+
+        private static async Task response_method(ReqProcesarSms request, SmsProcesar item_sms, List<SmsProcesado> list, SmsServices sms, ResValidarSms response_sms)
+        {
+            if (response_sms.str_res_estado_transaccion == "OK")
+            {
+
+                ReqProcesarTransf req_procs_transf = new ReqProcesarTransf
+                {
+                    str_num_telefono = item_sms.str_telefono,
+                    str_fecha_transaccion = item_sms.str_fecha_recepcion,
+                    int_sms_id = item_sms.int_sms_id
+                };
+
+                var resp_proces_transf = await sms.ProcesarTransferencia( req_procs_transf );
+
+                if (resp_proces_transf.str_res_estado_transaccion == "OK")
+                {
+                    await sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_OK", request.str_login, request.str_ip_dispositivo );
+                }
+                else
+                {
+                    await sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_ERROR", request.str_login, request.str_ip_dispositivo );
+                }
+                list.Add( new SmsProcesado { codigo = resp_proces_transf.str_res_codigo, mensaje = $"El Sms con ID. {item_sms.int_sms_id} ha sido procesado." } );
+            }
+            else
+            {
+                await sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_ERROR", request.str_login, request.str_ip_dispositivo );
+                list.Add( new SmsProcesado { codigo = "005", mensaje = $"El Sms con ID. {item_sms.int_sms_id} no contiene palabras clave." } );
             }
         }
     }

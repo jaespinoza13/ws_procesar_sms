@@ -65,34 +65,38 @@ namespace WebUI.Filters
             {
                 var response = ((ObjectResult)context.Result!).Value;
 
+                response_method( response );
+            }
+        }
 
-                if (response != null)
+        private void response_method(object? response)
+        {
+            if (response != null)
+            {
+                var reqGetKeys = JsonSerializer.Deserialize<ReqGetKeys>( JsonSerializer.Serialize( response ) )!;
+                if (_settings.lst_canales_encriptar.Contains( reqGetKeys.str_nemonico_canal ))
                 {
-                    var reqGetKeys = JsonSerializer.Deserialize<ReqGetKeys>( JsonSerializer.Serialize( response ) )!;
-                    if (_settings.lst_canales_encriptar.Contains( reqGetKeys.str_nemonico_canal ))
-                    {
-                        var res_tran = _keysDat.GetKeys( reqGetKeys );
-                        var Key = Conversions.ConvertConjuntoDatosToClass<ResGetKeys>( (ConjuntoDatos)res_tran.cuerpo, 0 );
+                    var res_tran = _keysDat.GetKeys( reqGetKeys );
+                    var Key = Conversions.ConvertConjuntoDatosToClass<ResGetKeys>( (ConjuntoDatos)res_tran.cuerpo, 0 );
 
-                        if (Key != null)
-                            try
-                            {
-                                if (response.GetType().GetMethod( "EncryptAES" ) != null)
+                    if (Key != null)
+                        try
+                        {
+                            if (response.GetType().GetMethod( "EncryptAES" ) != null)
 
-                                    response.GetType().GetMethod( "EncryptAES" )!.Invoke( response, new object[] { Key } );
+                                response.GetType().GetMethod( "EncryptAES" )!.Invoke( response, new object[] { Key } );
 
 
-                                response.GetType().GetMethod( "EncryptAESHeader" )!.Invoke( response, new object[] { Key } );
+                            response.GetType().GetMethod( "EncryptAESHeader" )!.Invoke( response, new object[] { Key } );
 
 
-                            }
-                            catch (Exception)
-                            {
-                                throw new ArgumentException( "Error: Credenciales inválidas 002" );
-                            }
-                        else
-                            throw new ArgumentException( "Error: Credenciales inválidas 001" );
-                    }
+                        }
+                        catch (Exception)
+                        {
+                            throw new ArgumentException( "Error: Credenciales inválidas 002" );
+                        }
+                    else
+                        throw new ArgumentException( "Error: Credenciales inválidas 001" );
                 }
             }
         }
