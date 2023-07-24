@@ -253,7 +253,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
                 ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_usuario", TipoDato = TipoDato.VarChar, ObjValue = str_login } );
                 ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_terminal", TipoDato = TipoDato.VarChar, ObjValue = str_ip_dispositivo } );
 
-                ds.NombreSP = "update_estado_proceso_sms";
+                ds.NombreSP = "set_estado_proceso_sms";
                 ds.NombreBD = _settings.DB_meg_servicios;
 
                 var resultado = _objClienteDal.ExecuteDataSet( ds );
