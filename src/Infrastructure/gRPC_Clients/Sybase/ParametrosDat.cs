@@ -97,7 +97,7 @@ internal class ParametrosDat : IParametrosDat
 
             respuesta.codigo = "0".ToString().Trim().PadLeft( 3, '0' );
             respuesta.cuerpo = Funciones.ObtenerDatos( resultado );
-            //respuesta.diccionario.Add( "str_error", str_error.ToString() );
+            
         }
         catch (Exception exception)
         {

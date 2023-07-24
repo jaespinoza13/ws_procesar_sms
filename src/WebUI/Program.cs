@@ -39,7 +39,10 @@ builder.Services.AddGrpcClient<DALMongoClient>( o =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment()) {}
+if (app.Environment.IsDevelopment()) {
+
+    app.UseDeveloperExceptionPage();
+}
 
 app.UseSwagger();
 app.UseSwaggerUI();
