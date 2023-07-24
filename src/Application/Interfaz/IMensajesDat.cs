@@ -7,7 +7,6 @@ namespace Application.Interfaz
     public interface IMensajesDat
     {
         Task<RespuestaTransaccion> GetSmsPorProcesar();
-        //Task<RespuestaTransaccion> ValidarCodigoSms(int int_codigo_sms);
         Task<RespuestaTransaccion> ValidarPalabraClaveBloquear(string str_texto_sms);
         Task<RespuestaTransaccion> ProcesarTransferencia(ReqProcesarTransf req_procesar_transf);
         Task<RespuestaTransaccion> ValidarSms(ReqValidarSms reqValidarSms, string str_login, string str_ip_dispositivo);

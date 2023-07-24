@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 
 namespace Application.Common.Cryptography;
 
-public class GenRsa
+public static class GenRsa
 {
     public static bool GenerateKeys(
        out string privateKey,

@@ -29,8 +29,9 @@ namespace Application.Common.Functions
             }
             else
             {
-                return finalObj = "";
+                return finalObj = 0;
             }
+            
             
             
         }

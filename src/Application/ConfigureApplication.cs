@@ -18,8 +18,6 @@ public static class ConfigureApplication
         services.AddTransient( typeof( IPipelineBehavior<,> ), typeof( ValidationBehaviour<,> ) );
         
         //CASOS DE USO
-        //services.AddTransient<IValidacionesPagoDirecto, ValidacionesPagoDirectoHandler>();
-
         return services;
     }
 }

@@ -70,8 +70,8 @@ namespace Application.DatosSms.ProcesarSms
             }
             catch (Exception exception)
             {
-                sms.ActualizarEstadoSms( int_sms_id, "EPS_PROCESADO_ERROR", request.str_id_usuario, request.str_ip_dispositivo );
-                await _logsService.SaveExceptionLogs( proveedor_response, strOperacion, MethodBase.GetCurrentMethod()!.Name, str_clase, exception );
+                await sms.ActualizarEstadoSms( int_sms_id, "EPS_PROCESADO_ERROR", request.str_id_usuario, request.str_ip_dispositivo );
+                 await _logsService.SaveExceptionLogs( proveedor_response, strOperacion, MethodBase.GetCurrentMethod()!.Name, str_clase, exception );
                 throw new ArgumentException( "Error" )!;
             }
         }
