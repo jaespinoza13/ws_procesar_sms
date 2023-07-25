@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Reflection.Emit;
 
+
 namespace Application.Common.Functions
 {
     public static class Extensions
@@ -18,23 +19,33 @@ namespace Application.Common.Functions
                 .SelectMany( o => o.GetType().GetProperties(), (o, p) => (o: o, p: p) )
                 .ToDictionary( t => t.p.Name, t => (propName: t.p.Name, propType: t.p.PropertyType, propValue: t.p.GetValue( t.o )) );
 
-            var objType = CreateClass( properties );
+            var objType = CreateClass( properties! );
             var finalObj = Activator.CreateInstance( objType );
-            return finalObj;
-
+            if (finalObj is not null)
+            {
+                return finalObj;
+            }
+            return finalObj!;
         }
 
         const MethodAttributes METHOD_ATTRIBUTES = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;
         private static ModuleBuilder ModuleBuilder;
 
-        internal static Type CreateClass(IDictionary<string, (string propName, Type type, object)> parameters)
+        internal static Type CreateClass(IDictionary<string, (string propName, Type type, object?)> parameters)
         {
+            
             var typeBuilder = ModuleBuilder.DefineType( Guid.NewGuid().ToString(), TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.AutoClass | TypeAttributes.AnsiClass | TypeAttributes.BeforeFieldInit | TypeAttributes.AutoLayout, null );
             typeBuilder.DefineDefaultConstructor( MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName );
+            
             foreach (var parameter in parameters)
                 CreateProperty( typeBuilder, parameter.Key, parameter.Value.type );
-            var type = typeBuilder.CreateTypeInfo().AsType();
-            return type;
+            var type = typeBuilder?.CreateTypeInfo()?.AsType();
+            if (type is not null )
+            {
+                return type;
+            }
+            return type!;
+
         }
 
         private static PropertyBuilder CreateProperty(TypeBuilder typeBuilder, string propertyName, Type propertyType)
@@ -49,7 +60,7 @@ namespace Application.Common.Functions
         }
 
         private static MethodBuilder DefineSet(TypeBuilder typeBuilder, FieldBuilder fieldBuilder, PropertyBuilder propBuilder)
-            => DefineMethod( typeBuilder, $"set_{propBuilder.Name}", null, new[] { propBuilder.PropertyType }, il =>
+            => DefineMethod( typeBuilder, $"set_{propBuilder.Name}", propBuilder.PropertyType, new[] { propBuilder.PropertyType }, il =>
             {
                 il.Emit( OpCodes.Ldarg_0 );
                 il.Emit( OpCodes.Ldarg_1 );
