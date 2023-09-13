@@ -88,7 +88,7 @@ namespace Application.DatosSms.ProcesarSms
                     int_sms_id = item_sms.int_sms_id
                 };
 
-                var resp_proces_transf = await sms.ProcesarTransferencia( req_procs_transf );
+                var resp_proces_transf = await sms.ProcesarTransferencia( req_procs_transf, request.str_ip_dispositivo );
 
                 if (resp_proces_transf.str_res_estado_transaccion == "OK")
                 {

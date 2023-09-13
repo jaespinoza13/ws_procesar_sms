@@ -114,7 +114,7 @@ namespace Application.SmsSocio
             }
         }
 
-        public async Task<ResProcesarTransf> ProcesarTransferencia(ReqProcesarTransf req_procesar_transf)
+        public async Task<ResProcesarTransf> ProcesarTransferencia(ReqProcesarTransf req_procesar_transf, string str_ip_dispositivo)
         {
             string strOperacion = "PROCESAR_TRANSFERENCIA";
             var log_body = new LogBody
@@ -128,7 +128,7 @@ namespace Application.SmsSocio
             ResProcesarTransf respuesta = new();
             try
             {
-                RespuestaTransaccion res_tran = await _sms.ProcesarTransferencia( req_procesar_transf );
+                RespuestaTransaccion res_tran = await _sms.ProcesarTransferencia( req_procesar_transf, str_ip_dispositivo );
                 respuesta.str_res_estado_transaccion = (res_tran.codigo.Equals( "000" )) ? "OK" : "ERR";
                 respuesta.str_res_codigo = res_tran.codigo;
                 respuesta.str_res_info_adicional = res_tran.diccionario["str_error"].ToString();
