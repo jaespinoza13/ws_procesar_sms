@@ -2,16 +2,16 @@ pipeline {
     
     agent {
         node {
-            label 'web-service-development-server'
+            label 'web-service-production-server'
         }
     }
 
     environment {
         VERSION_DESPLIEGUE  = '1.0.0'
         VERSION_PRODUCCION  = '0.0.0'
-        NOMBRE_CONTENEDOR   = 'servicio-procesar_sms'
+        NOMBRE_CONTENEDOR   = 'servicio-procesar-sms'
         NOMBRE_IMAGEN       = 'ws_procesar_sms'
-        PUERTO              = '7001'
+        PUERTO              = '9037'
         PUERTO_CONTENEDOR   = '80'
         RUTA_CONFIG         = '/config/wsProcesarSms/'
     }
@@ -41,8 +41,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying ...'
-                sh  '''docker run --restart=always -it -dp ${PUERTO}:${PUERTO_CONTENEDOR} \
-                        --name ${NOMBRE_CONTENEDOR} \
+                sh  '''docker run --restart=always -it -dp ${PUERTO}:${PUERTO_CONTENEDOR} --name ${NOMBRE_CONTENEDOR} \
                         -e TZ=${TZ} \
                         -v ${RUTA_CONFIG}appsettings.json:/app/appsettings.json \
                         ${NOMBRE_IMAGEN}:${VERSION_DESPLIEGUE}
@@ -61,13 +60,12 @@ pipeline {
     post {
 
         success {
-            slackSend color: '#BADA55', message: "Despliegue exitoso  - ${env.JOB_NAME} versión publicada ${VERSION_DESPLIEGUE} (<${env.BUILD_URL}|Open>)"
+            slackSend color: '#BADA55', message: "Despliegue exitoso - ${env.JOB_NAME} versión publicada ${VERSION_DESPLIEGUE} (<${env.BUILD_URL}|Open>)"
         }
 
         failure {
             sh  'docker rm -f ${NOMBRE_CONTENEDOR}'
-            sh  '''docker run --restart=always -it -dp ${PUERTO}:${PUERTO_CONTENEDOR} \
-                    --name ${NOMBRE_CONTENEDOR} \
+            sh  '''docker run --restart=always -it -dp ${PUERTO}:${PUERTO_CONTENEDOR} --name ${NOMBRE_CONTENEDOR} \
                     -e TZ=${TZ} \
                     -v ${RUTA_CONFIG}appsettings.json:/app/appsettings.json \
                     ${NOMBRE_IMAGEN}:${VERSION_PRODUCCION}
