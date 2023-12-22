@@ -2,8 +2,8 @@
 
 namespace Infrastructure.MemoryCache
 {
-    public interface IParametrosDat
-    {
-        RespuestaTransaccion GetParametros(dynamic reqGetParametros);
-    }
+    //public interface IParametrosDat
+    //{
+    //    RespuestaTransaccion GetParametros(dynamic reqGetParametros);
+    //}
 }

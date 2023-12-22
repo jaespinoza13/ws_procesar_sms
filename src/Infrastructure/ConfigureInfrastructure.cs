@@ -19,7 +19,7 @@ public static class ConfigureInfrastructure
         services.AddSingleton<IMongoDat, LogsMongoDat>();
         services.AddSingleton<IDailyRequest, DailyRequest>();
         services.AddSingleton<IParametersInMemory, ParametersInMemory>();
-        services.AddSingleton<IParametrosDat, ParametrosDat>();
+        //services.AddSingleton<IParametrosDat, ParametrosDat>();
         services.AddTransient<IHttpService, HttpService>();
         services.AddTransient<ISqlInjectionValidationService, SqlInjectionValidationService>();
         services.AddSingleton<IOtpDat, OtpDat>();
