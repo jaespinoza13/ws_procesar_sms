@@ -51,8 +51,6 @@ app.UseCors();
 
 app.UseAuthotizationMego();
 
-//app.UseValidateCachedParameters();
-
 app.UseAuthorization();
 
 app.UseHttpsRedirection();
