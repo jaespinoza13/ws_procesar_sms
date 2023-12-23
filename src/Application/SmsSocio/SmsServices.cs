@@ -92,28 +92,7 @@ namespace Application.SmsSocio
             }
         }
 
-        public async Task<ResValidarPalabraClave> ValidarPalabraClave(string str_texto_sms)
-        {
-            string strOperacion = "VALIDAR_PALABRA_CLAVE";
-            ResValidarPalabraClave respuesta = new();
-            try
-            {
-                var res_tran = await _sms.ValidarPalabraClaveBloquear( str_texto_sms );
-                respuesta.str_res_estado_transaccion = res_tran.codigo.Equals( "000" ) ? "OK" : "ERR";
-                respuesta.str_res_codigo = res_tran.codigo;
-
-                respuesta.palabras_clave = Conversions.ConvertConjuntoDatosToListClass<PalabrasSms>( (ConjuntoDatos)res_tran.cuerpo );
-                await _logsService.SaveResponseLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
-                return respuesta;
-
-            }
-            catch (Exception ex)
-            {
-                await _logsService.SaveExceptionLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
-                throw new ArgumentException( respuesta.str_id_transaccion );
-            }
-        }
-
+       
         public async Task<ResProcesarTransf> ProcesarTransferencia(ReqProcesarTransf req_procesar_transf, string str_ip_dispositivo)
         {
             string strOperacion = "PROCESAR_TRANSFERENCIA";
