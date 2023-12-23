@@ -129,35 +129,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
             return respuesta;
         }
 
-        public async Task<RespuestaTransaccion> ValidarPalabraClaveBloquear(string str_texto_sms)
-        {
-            RespuestaTransaccion respuesta = new RespuestaTransaccion();
-
-            try
-            {
-                DatosSolicitud ds = new();
-
-                ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_texto_sms", TipoDato = TipoDato.VarChar, ObjValue = str_texto_sms } );
-
-                ds.NombreSP = "stp_analizar_texto";
-                ds.NombreBD = _settings.DB_meg_notificaciones;
-
-                var resultado = _objClienteDal.ExecuteDataSet( ds );
-                var lst_valores = new List<ParametroSalidaValores>();
-
-                foreach (var item in resultado.ListaPSalidaValores) lst_valores.Add( item );
-                respuesta.codigo = "0".ToString().Trim().PadLeft( 3, '0' );
-                respuesta.cuerpo = Funciones.ObtenerDatos( resultado );
-            }
-            catch (Exception ex)
-            {
-                respuesta.codigo = "003";
-                respuesta.diccionario.Add( "str_error", ex.ToString() );
-                await _logsService.SaveExcepcionDataBaseSybase( respuesta, MethodBase.GetCurrentMethod()!.Name, ex, _str_clase );
-            }
-            return respuesta;
-        }
-
+      
         public async Task<RespuestaTransaccion> GuardarSmsSocio(Sms sms, string str_sms_estado)
         {
             RespuestaTransaccion respuesta = new();

@@ -5,7 +5,6 @@
         public string? DB_meg_megonline { get; set; }
         public string? DB_meg_servicios { get; set; }
         public string? DB_meg_sistemas { get; set; }
-        public string? DB_meg_notificaciones { get; set; }
         public string? DB_meg_bce { get; set; }
 
 
