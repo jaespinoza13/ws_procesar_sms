@@ -270,3 +270,7 @@ __pycache__/
 # Plantillas de comprobantes
 /src/WebUI/Comprobantes
 
+# Archivo Desktop 
+Desktop.ini
+
+
