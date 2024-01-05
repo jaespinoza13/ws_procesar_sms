@@ -2,16 +2,16 @@ pipeline {
     
     agent {
         node {
-            label 'web-service-production-server'
+            label 'microservicios-internos-production-server'
         }
     }
 
     environment {
         VERSION_DESPLIEGUE  = '1.0.1'
         VERSION_PRODUCCION  = '1.0.0'
-        NOMBRE_CONTENEDOR   = 'servicio-procesar-sms'
-        NOMBRE_IMAGEN       = 'ws_procesar_sms'
-        PUERTO              = '9042'
+        NOMBRE_CONTENEDOR   = 'cnt-ws-procesar-sms'
+        NOMBRE_IMAGEN       = 'img_ws_procesar_sms'
+        PUERTO              = '9001'
         PUERTO_CONTENEDOR   = '80'
         RUTA_CONFIG         = '/config/wsProcesarSms'
     }
