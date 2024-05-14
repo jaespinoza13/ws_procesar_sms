@@ -110,7 +110,6 @@ namespace Infrastructure.gRPC_Clients.Sybase
 
                 var resultado = _objClienteDal.ExecuteDataSet( ds );
                 var lst_valores = new List<ParametroSalidaValores>();
-
                 foreach (var item in resultado.ListaPSalidaValores) lst_valores.Add( item );
                 var str_codigo = lst_valores.Find( x => x.StrNameParameter == "@str_error" )!.ObjValue.Trim();
                 var int_codigo = lst_valores.Find( x => x.StrNameParameter == "@int_error_cod" )!.ObjValue;
