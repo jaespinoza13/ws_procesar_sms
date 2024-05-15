@@ -107,7 +107,6 @@ namespace Infrastructure.gRPC_Clients.Sybase
 
                 ds.NombreSP = "set_procesar_transferencias";
                 ds.NombreBD = _settings.DB_meg_servicios;
-
                 var resultado = _objClienteDal.ExecuteDataSet( ds );
                 var lst_valores = new List<ParametroSalidaValores>();
                 foreach (var item in resultado.ListaPSalidaValores) lst_valores.Add( item );
