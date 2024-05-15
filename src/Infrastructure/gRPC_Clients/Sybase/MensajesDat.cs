@@ -113,7 +113,6 @@ namespace Infrastructure.gRPC_Clients.Sybase
                 foreach (var item in resultado.ListaPSalidaValores) lst_valores.Add( item );
                 var str_codigo = lst_valores.Find( x => x.StrNameParameter == "@str_error" )!.ObjValue.Trim();
                 var int_codigo = lst_valores.Find( x => x.StrNameParameter == "@int_error_cod" )!.ObjValue;
-
                 respuesta.codigo = int_codigo!.ToString().Trim().PadLeft( 3, '0' );
                 respuesta.cuerpo = Funciones.ObtenerDatos( resultado );
                 respuesta.diccionario.Add( "str_error", str_codigo.ToString() );
