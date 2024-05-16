@@ -30,7 +30,7 @@ namespace Application.DatosSms.ObtenerSms
             // Instanciar la clase SmsServices --> Application/SmsSocio/SmsServices
             SmsServices sms = new SmsServices( _logsService, _mensaje, proveedor_response.str_id_transaccion );
 
-            await _logsService.SaveHeaderLogs( req_obtener_sms, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+             _logsService.SaveHeaderLogs( req_obtener_sms, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
 
             try
             {
@@ -52,7 +52,7 @@ namespace Application.DatosSms.ObtenerSms
             }
             catch (Exception exception)
             {
-                await _logsService.SaveExceptionLogs( proveedor_response, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, exception );
+                 _logsService.SaveExceptionLogs( proveedor_response, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, exception );
                 throw new ArgumentException( proveedor_response.str_id_transaccion );
             }
         }

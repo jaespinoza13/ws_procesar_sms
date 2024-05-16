@@ -30,12 +30,12 @@ namespace Application.Parametros
                 respuesta.str_res_codigo = res_tran.codigo;
 
                 respuesta.parametros = Conversions.ConvertConjuntoDatosToListClass<ParametroSistema>( (ConjuntoDatos)res_tran.cuerpo );
-                await _logsService.SaveResponseLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+                 _logsService.SaveResponseLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
                 return respuesta;
             }
             catch (Exception ex)
             {
-                await _logsService.SaveExceptionLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
+                 _logsService.SaveExceptionLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
                 throw new ArgumentException("Error al obtener los parametros.");
             }
         }

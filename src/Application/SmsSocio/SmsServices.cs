@@ -40,7 +40,7 @@ namespace Application.SmsSocio
                 str_operacion = strOperacion
             };
 
-            await _logsService.SaveHeaderLogs( log_body, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+             _logsService.SaveHeaderLogs( log_body, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
             ResSmsPorProcesar res_val = new();
             try
             {
@@ -53,10 +53,10 @@ namespace Application.SmsSocio
             }
             catch (Exception ex)
             {
-                await _logsService.SaveExceptionLogs( log_body.Spread( res_val ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
+                 _logsService.SaveExceptionLogs( log_body.Spread( res_val ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
                 throw new ArgumentException("Error al obtener los sms por procesar.");
             }
-            await _logsService.SaveResponseLogs( log_body.Spread( res_val ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+            _logsService.SaveResponseLogs( log_body.Spread( res_val ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
             return res_val;
         }
 
@@ -70,7 +70,7 @@ namespace Application.SmsSocio
                 str_operacion = strOperacion
             };
 
-            await _logsService.SaveHeaderLogs( log_body.Spread( reqValidarSms ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+             _logsService.SaveHeaderLogs( log_body.Spread( reqValidarSms ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
             ResValidarSms respuesta = new();
             try
             {
@@ -82,12 +82,12 @@ namespace Application.SmsSocio
                 {
                     respuesta.palabras_clave = Conversions.ConvertConjuntoDatosToListClass<PalabrasSms>( (ConjuntoDatos)res_tran.cuerpo );
                 }
-                await _logsService.SaveResponseLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+                 _logsService.SaveResponseLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
                 return respuesta;
             }
             catch (Exception ex)
             {
-                await _logsService.SaveExceptionLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
+                 _logsService.SaveExceptionLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
                 throw new ArgumentException( "Error al validar el sms.");
             }
         }
@@ -103,7 +103,7 @@ namespace Application.SmsSocio
                 str_operacion = strOperacion
             };
 
-            await _logsService.SaveHeaderLogs( log_body.Spread( req_procesar_transf ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+             _logsService.SaveHeaderLogs( log_body.Spread( req_procesar_transf ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
             ResProcesarTransf respuesta = new();
             try
             {
@@ -111,12 +111,12 @@ namespace Application.SmsSocio
                 respuesta.str_res_estado_transaccion = (res_tran.codigo.Equals( "000" )) ? "OK" : "ERR";
                 respuesta.str_res_codigo = res_tran.codigo;
                 respuesta.str_res_info_adicional = res_tran.diccionario["str_error"].ToString();
-                await _logsService.SaveResponseLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+                 _logsService.SaveResponseLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
                 return respuesta;
             }
             catch (Exception ex)
             {
-                await _logsService.SaveExceptionLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
+                 _logsService.SaveExceptionLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
                 throw new ArgumentException( "Error al procesar las transferencias." );
             }
         }
@@ -131,7 +131,7 @@ namespace Application.SmsSocio
                 str_operacion = strOperacion
             };
 
-            await _logsService.SaveHeaderLogs( log_body.Spread( req_agregar_sms.sms, new { estado = req_agregar_sms.str_sms_estado } ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+             _logsService.SaveHeaderLogs( log_body.Spread( req_agregar_sms.sms, new { estado = req_agregar_sms.str_sms_estado } ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
             ResAgregarSms respuesta = new();
             try
             {
@@ -140,11 +140,11 @@ namespace Application.SmsSocio
                 respuesta.str_res_codigo = res_tran.codigo;
                 respuesta.str_res_info_adicional = res_tran.diccionario["str_error"].ToString();
                 respuesta.int_duplicado_sms = Convert.ToInt32(res_tran.diccionario["int_duplicado"]);
-                await _logsService.SaveResponseLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+                 _logsService.SaveResponseLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
             }
             catch (Exception ex)
             {
-                await _logsService.SaveExceptionLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
+                 _logsService.SaveExceptionLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
                 throw new ArgumentException( "Error al almacenar el sms." );
             }
             return respuesta;
@@ -160,7 +160,7 @@ namespace Application.SmsSocio
                 str_operacion = strOperacion
             };
 
-            await _logsService.SaveResponseLogs( log_body.Spread( new { sms_id = int_sms_id, estado = str_estado_sms }), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+             _logsService.SaveResponseLogs( log_body.Spread( new { sms_id = int_sms_id, estado = str_estado_sms }), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
             ResProcesarTransf respuesta = new();
             try
             {
@@ -168,11 +168,11 @@ namespace Application.SmsSocio
                 respuesta.str_res_estado_transaccion = (res_tran.codigo.Equals( "000" )) ? "OK" : "ERR";
                 respuesta.str_res_codigo = res_tran.codigo;
                 respuesta.str_res_info_adicional = res_tran.diccionario["str_error"].ToString();
-                await _logsService.SaveResponseLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+                 _logsService.SaveResponseLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
             }
             catch (Exception ex)
             {
-                await _logsService.SaveExceptionLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
+                 _logsService.SaveExceptionLogs( log_body.Spread( respuesta ), strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, ex );
                 throw new ArgumentException( "Error al actualizar el estado del sms." );
             }
         }

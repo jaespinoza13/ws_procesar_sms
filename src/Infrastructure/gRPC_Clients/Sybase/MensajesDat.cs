@@ -48,7 +48,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
             {
                 respuesta.codigo = "003";
                 respuesta.diccionario.Add( "str_error", ex.ToString() );
-                await _logsService.SaveExcepcionDataBaseSybase( respuesta, MethodBase.GetCurrentMethod()!.Name, ex, _str_clase );
+                _logsService.SaveExcepcionDataBaseSybase( respuesta, MethodBase.GetCurrentMethod()!.Name, ex, _str_clase );
             }
             return respuesta;
         }
@@ -85,7 +85,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
             {
                 respuesta.codigo = "003";
                 respuesta.diccionario.Add( "str_error", ex.ToString() );
-                await _logsService.SaveExcepcionDataBaseSybase( respuesta, MethodBase.GetCurrentMethod()!.Name, ex, _str_clase );
+                _logsService.SaveExcepcionDataBaseSybase( respuesta, MethodBase.GetCurrentMethod()!.Name, ex, _str_clase );
             }
             return respuesta;
         }
@@ -97,14 +97,12 @@ namespace Infrastructure.gRPC_Clients.Sybase
             try
             {
                 DatosSolicitud ds = new();
-
                 ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_num_telefono", TipoDato = TipoDato.VarChar, ObjValue = req_procesar_transf.str_num_telefono } );
                 ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_fecha_transaccion", TipoDato = TipoDato.VarChar, ObjValue = req_procesar_transf.str_fecha_transaccion } );
                 ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_sms_id", TipoDato = TipoDato.Integer, ObjValue = req_procesar_transf.int_sms_id.ToString() } );
                 ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_ip_disp", TipoDato = TipoDato.VarChar, ObjValue = str_ip_dispositivo } );
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@str_error", TipoDato = TipoDato.VarChar } );
                 ds.ListaPSalida.Add( new ParametroSalida { StrNameParameter = "@int_error_cod", TipoDato = TipoDato.Integer } );
-
                 ds.NombreSP = "set_procesar_transferencias";
                 ds.NombreBD = _settings.DB_meg_servicios;
                 var resultado = _objClienteDal.ExecuteDataSet( ds );
@@ -120,7 +118,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
             {
                 respuesta.codigo = "003";
                 respuesta.diccionario.Add( "str_error", ex.ToString() );
-                await _logsService.SaveExcepcionDataBaseSybase( respuesta, MethodBase.GetCurrentMethod()!.Name, ex, _str_clase );
+                _logsService.SaveExcepcionDataBaseSybase( respuesta, MethodBase.GetCurrentMethod()!.Name, ex, _str_clase );
             }
             return respuesta;
         }
@@ -173,7 +171,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
             {
                 respuesta.codigo = "003";
                 respuesta.diccionario.Add( "str_error", ex.ToString() );
-                await _logsService.SaveExcepcionDataBaseSybase( respuesta, MethodBase.GetCurrentMethod()!.Name, ex, _str_clase );
+                _logsService.SaveExcepcionDataBaseSybase( respuesta, MethodBase.GetCurrentMethod()!.Name, ex, _str_clase );
             }
             return respuesta;
         }
@@ -211,7 +209,7 @@ namespace Infrastructure.gRPC_Clients.Sybase
             {
                 respuesta.codigo = "003";
                 respuesta.diccionario.Add( "str_error", ex.ToString() );
-                await _logsService.SaveExcepcionDataBaseSybase( respuesta, MethodBase.GetCurrentMethod()!.Name, ex, _str_clase );
+                _logsService.SaveExcepcionDataBaseSybase( respuesta, MethodBase.GetCurrentMethod()!.Name, ex, _str_clase );
             }
             return respuesta;
         }
