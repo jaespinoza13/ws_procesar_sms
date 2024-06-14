@@ -33,7 +33,7 @@ namespace Application.DatosSms.ProcesarSms
             proveedor_response.LlenarResHeader( request );
             SmsServices sms = new SmsServices( _logsService, _mensaje, proveedor_response.str_id_transaccion );
 
-             _logsService.SaveHeaderLogs( request, strOperacion, MethodBase.GetCurrentMethod()!.Name, str_clase );
+             _ = _logsService.SaveHeaderLogs( request, strOperacion, MethodBase.GetCurrentMethod()!.Name, str_clase );
             
             try
             {
@@ -65,13 +65,13 @@ namespace Application.DatosSms.ProcesarSms
                     proveedor_response.str_res_info_adicional = "No se encontraron SMS para procesar";
                 }
                 proveedor_response.sms_procesados = list;
-                 _logsService.SaveResponseLogs( proveedor_response, strOperacion, MethodBase.GetCurrentMethod()!.Name, str_clase );
+                 _ = _logsService.SaveResponseLogs( proveedor_response, strOperacion, MethodBase.GetCurrentMethod()!.Name, str_clase );
                 return proveedor_response;
             }
             catch (Exception exception)
             {
-                   sms.ActualizarEstadoSms( int_sms_id, "EPS_PROCESADO_ERROR", request.str_id_usuario, request.str_ip_dispositivo );
-                  _logsService.SaveExceptionLogs( proveedor_response, strOperacion, MethodBase.GetCurrentMethod()!.Name, str_clase, exception );
+                   _ = sms.ActualizarEstadoSms( int_sms_id, "EPS_PROCESADO_ERROR", request.str_id_usuario, request.str_ip_dispositivo );
+                  _ = _logsService.SaveExceptionLogs( proveedor_response, strOperacion, MethodBase.GetCurrentMethod()!.Name, str_clase, exception );
                 throw new ArgumentException( "Error" )!;
             }
         }
@@ -92,17 +92,17 @@ namespace Application.DatosSms.ProcesarSms
 
                 if (resp_proces_transf.str_res_estado_transaccion == "OK")
                 {
-                     sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_OK", request.str_login, request.str_ip_dispositivo );
+                     _ = sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_OK", request.str_login, request.str_ip_dispositivo );
                 }
                 else
                 {
-                     sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_ERROR", request.str_login, request.str_ip_dispositivo );
+                     _ = sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_ERROR", request.str_login, request.str_ip_dispositivo );
                 }
                 list.Add( new SmsProcesado { codigo = resp_proces_transf.str_res_codigo, mensaje = $"El Sms con ID. {item_sms.int_sms_id} ha sido procesado." } );
             }
             else
             {
-                 sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_ERROR", request.str_login, request.str_ip_dispositivo );
+                 _ = sms.ActualizarEstadoSms( item_sms.int_sms_id, "EPS_PROCESADO_ERROR", request.str_login, request.str_ip_dispositivo );
                 list.Add( new SmsProcesado { codigo = "005", mensaje = $"El Sms con ID. {item_sms.int_sms_id} no contiene palabras clave." } );
             }
         }
